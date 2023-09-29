@@ -1,0 +1,7 @@
+gunicorn
+numpy
+cv2
+tensorflow
+keras
+keras.models
+flask
