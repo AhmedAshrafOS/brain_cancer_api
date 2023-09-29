@@ -1,6 +1,6 @@
 gunicorn
 numpy
-cv2
+opencv-python-headless
 tensorflow
 keras
 keras.models
