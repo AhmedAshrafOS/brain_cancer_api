@@ -1,5 +1,6 @@
 gunicorn
 numpy
 opencv-python
-tensorflow.keras
+tensorflow
+keras
 flask
