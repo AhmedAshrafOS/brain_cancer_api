@@ -1,9 +1,9 @@
 # !pip install flask
 
 import numpy as np
-import cv2
 import tensorflow as tf
 from keras.models import load_model
+from PIL import Image
 from flask import Flask, request, jsonify
 
 model = load_model('model_image_(Brain).h5')
@@ -15,12 +15,11 @@ app = Flask(__name__)
 def predict():
     try:
         file = request.files['image']
-        img_data = np.frombuffer(file.read(), dtype = np.uint8)
-        img = cv2.imdecode(img_data, cv2.IMREAD_COLOR)
-        img = cv2.resize(img, (128, 128))
-        #img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
+        img = Image.open(file)
+        img = img.resize((128, 128))
+        img = np.array(img.convert('RGB'))
 
-        prediction = model.predict(np.array([img]))
+        prediction = model.predict(img[tf.newaxis, ...])
         predicted_class = np.argmax(prediction)
 
         classes = ['brain_menin', 'brain_glioma', 'brain_pituitary', 'no_tumor']
